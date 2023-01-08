@@ -185,11 +185,11 @@ void ht_iterfree(HashTableIterator *it)
 
 bool ht_hasnext(HashTableIterator *it)
 {
-    HashTableIteratorImpl* impl = (HashTableIteratorImpl*) it;
+    HashTableIteratorImpl* pimpl = (HashTableIteratorImpl*) it;
 
-    for (size_t i = impl->index + 1; i < impl->ht->size; ++i)
+    for (size_t i = pimpl->index + 1; i < pimpl->ht->size; ++i)
     {
-        if (impl->ht->buckets[i].key != NULL) return true;
+        if (pimpl->ht->buckets[i].key != NULL) return true;
     }
 
     return false;
@@ -197,16 +197,16 @@ bool ht_hasnext(HashTableIterator *it)
 
 HashTableIterator* ht_next(HashTableIterator* it)
 {
-    HashTableIteratorImpl* impl = (HashTableIteratorImpl*) it;
+    HashTableIteratorImpl* pimpl = (HashTableIteratorImpl*) it;
 
-    while(++impl->index < impl->ht->size)
+    while(++pimpl->index < pimpl->ht->size)
     {
-        if (impl->ht->buckets[impl->index].key != NULL)
+        if (pimpl->ht->buckets[pimpl->index].key != NULL)
         {
-            impl->it.key = impl->ht->buckets[impl->index].key;
-            impl->it.value = impl->ht->buckets[impl->index].value;
+            pimpl->it.key = pimpl->ht->buckets[pimpl->index].key;
+            pimpl->it.value = pimpl->ht->buckets[pimpl->index].value;
 
-            return &impl->it;
+            return &pimpl->it;
         }
     }
 
