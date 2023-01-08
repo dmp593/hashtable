@@ -172,15 +172,15 @@ void ht_iterfree(HashTableIterator *it)
 {
     if (!it) return;
 
-    HashTableIteratorImpl* impl = (HashTableIteratorImpl*) it;
+    HashTableIteratorImpl* pimpl = (HashTableIteratorImpl*) it;
 
-    impl->it.key = 0;
-    impl->it.value = 0;
-    impl->ht = NULL;
-    impl->index = -1;
+    pimpl->it.key = 0;
+    pimpl->it.value = 0;
+    pimpl->ht = NULL;
+    pimpl->index = -1;
     
-    free(impl);
-    impl = NULL;
+    free(pimpl);
+    pimpl = NULL;
 }
 
 bool ht_hasnext(HashTableIterator *it)
