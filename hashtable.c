@@ -176,7 +176,6 @@ HashTableIterator* ht_itermake(const HashTable* ht)
 
     pimpl->it.key = 0;
     pimpl->it.value = 0;
-
     pimpl->ht = ht;
     pimpl->index = -1;
 
@@ -191,7 +190,7 @@ void ht_iterfree(HashTableIterator *it)
 
     pimpl->it.key = 0;
     pimpl->it.value = 0;
-    pimpl->ht = NULL;
+    pimpl->ht = 0;
     pimpl->index = -1;
     
     free(pimpl);
