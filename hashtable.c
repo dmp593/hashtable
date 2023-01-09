@@ -172,15 +172,15 @@ size_t ht_length(const HashTable* ht)
 
 HashTableIterator* ht_itermake(const HashTable* ht)
 {
-    HashTableIteratorImpl* impl = calloc(1, sizeof(HashTableIteratorImpl));
+    HashTableIteratorImpl* pimpl = calloc(1, sizeof(HashTableIteratorImpl));
 
-    impl->it.key = 0;
-    impl->it.value = 0;
+    pimpl->it.key = 0;
+    pimpl->it.value = 0;
 
-    impl->ht = ht;
-    impl->index = -1;
+    pimpl->ht = ht;
+    pimpl->index = -1;
 
-    return &impl->it;
+    return &pimpl->it;
 }
 
 void ht_iterfree(HashTableIterator *it)
