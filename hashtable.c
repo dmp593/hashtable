@@ -76,7 +76,7 @@ size_t ht_index(const HashTable* ht, const char* key)
 
     while (ht->buckets[index].key != NULL) // collision... linear probing
     {
-        if (strcmp(key, ht->buckets[index].key) == 0) return index; // already exists
+        if (strcmp(key, ht->buckets[index].key) == 0) return index;
         index = (index + 1) % ht->size;
     }
 
