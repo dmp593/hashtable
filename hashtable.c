@@ -146,15 +146,15 @@ void* ht_del(HashTable* ht, const char* key)
     void* value = bucket->value;
     bucket->value = NULL;
 
-    for (size_t i = index + 1; ht->buckets[i].key; ++i)
+    while (ht->buckets[++index].key)
     {
-        size_t new_index = ht_index(ht, ht->buckets[i].key);
-        if (new_index == i) continue;
+        size_t new_index = ht_index(ht, ht->buckets[index].key);
+        if (new_index == index) continue;
 
-        Bucket tmp = { ht->buckets[i].key, ht->buckets[i].value };
+        Bucket tmp = { ht->buckets[index].key, ht->buckets[index].value };
 
-        ht->buckets[i].key = NULL;
-        ht->buckets[i].value = NULL;
+        ht->buckets[index].key = NULL;
+        ht->buckets[index].value = NULL;
 
         ht->buckets[new_index].key = tmp.key;
         ht->buckets[new_index].value = tmp.value;
