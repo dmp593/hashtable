@@ -54,7 +54,6 @@ void ht_free(HashTable* ht)
     ht->size = 0;
 
     free(ht);
-    ht = NULL;
 }
 
 // FNV-1a hash function
@@ -194,7 +193,6 @@ void ht_iterfree(HashTableIterator *it)
     pimpl->index = -1;
     
     free(pimpl);
-    pimpl = NULL;
 }
 
 bool ht_hasnext(HashTableIterator *it)
