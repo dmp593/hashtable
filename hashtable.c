@@ -58,7 +58,8 @@ void ht_free(HashTable* ht)
 }
 
 // FNV-1a hash function
-uint64_t ht_hash(const char* key) {
+uint64_t ht_hash(const char* key)
+{
     uint64_t hash = FNV_OFFSET_BASIS;
 
     for (const char* ptr = key; *ptr; ++ptr)
