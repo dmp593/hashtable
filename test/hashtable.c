@@ -295,8 +295,6 @@ bool test_ht_consistency()
         }
     }
 
-
-
     free(ht);
     return true;
 }
