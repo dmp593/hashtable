@@ -90,7 +90,7 @@ void ht_expand(HashTable* ht)
 
     Bucket* buckets = ht->buckets;
     ht->buckets = calloc(ht->size, sizeof(Bucket));
-    
+
     for (size_t i = 0; i < old_size; ++i)
     {
         if (buckets[i].key == NULL) continue;
@@ -135,7 +135,8 @@ void* ht_get(const HashTable* ht, const char* key)
 
 void* ht_del(HashTable* ht, const char* key)
 {
-    Bucket* bucket = ht->buckets + ht_index(ht, key);
+    size_t index = ht_index(ht, key);
+    Bucket* bucket = ht->buckets + index;
 
     if (!bucket->key || strcmp(key, bucket->key) != 0) return NULL;
 
@@ -144,6 +145,20 @@ void* ht_del(HashTable* ht, const char* key)
 
     void* value = bucket->value;
     bucket->value = NULL;
+
+    for (size_t i = index + 1; ht->buckets[i].key; ++i)
+    {
+        size_t new_index = ht_index(ht, ht->buckets[i].key);
+        if (new_index == i) continue;
+
+        Bucket tmp = { ht->buckets[i].key, ht->buckets[i].value };
+
+        ht->buckets[i].key = NULL;
+        ht->buckets[i].value = NULL;
+
+        ht->buckets[new_index].key = tmp.key;
+        ht->buckets[new_index].value = tmp.value;
+    }
 
     ht->length--;
     return value;

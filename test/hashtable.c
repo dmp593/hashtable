@@ -261,6 +261,47 @@ bool test_ht_stress()
 }
 
 
+bool test_ht_consistency()
+{
+    HashTable* ht = ht_make();
+
+    char key[10] = {0};
+
+    for (int i = 0; i < 32; ++i)
+    {
+        sprintf(key, "key-%d", i);
+        ht_put(ht, key, "lorem");
+    }
+
+    for (int i = 0; i < 32; ++i)
+    {
+        if (i % 2 == 0)
+        {
+            sprintf(key, "key-%d", i);
+            ht_del(ht, key);
+        }
+    }
+
+    for (int i = 0; i < 32; ++i)
+    {
+        if (i % 2 != 0)
+        {
+            sprintf(key, "key-%d", i);
+            if (! ht_has(ht, key))
+            {
+                free(ht);
+                return false;
+            }
+        }
+    }
+
+
+
+    free(ht);
+    return true;
+}
+
+
 int main()
 {
     TEST_INIT();
@@ -273,6 +314,7 @@ int main()
     TEST(test_ht_length, "HashTable Length");
     TEST(test_ht_expand, "Test Expand HashTable");
     TEST(test_ht_stress, "Stress Test (50K)");
+    TEST(test_ht_consistency, "Consistency deleting");
 
     TEST_STOP();
     return 0;
